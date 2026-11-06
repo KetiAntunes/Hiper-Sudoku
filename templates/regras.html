@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>Regras</h1>
+<ul>
+    <li>O tabuleiro tem 81 casas, organizadas em uma grade 9x9 dividida em 9 blocos de 3x3.</li>
+    <li>Preencha as casas vazias com números de 1 a 9.</li>
+    <li>Cada linha deve ter os números de 1 a 9, sem repetir.</li>
+    <li>Cada coluna deve ter os números de 1 a 9, sem repetir.</li>
+    <li>Cada bloco 3x3 deve ter os números de 1 a 9, sem repetir.</li>
+    <li>Os números em cinza já vêm no jogo e não podem ser alterados.</li>
+    <li>Para jogar: clique em uma casa vazia e depois clique no número desejado.</li>
+</ul>
+<a class="botao" href="{{ url_for('index') }}">Voltar para o jogo</a>
+{% endblock %}

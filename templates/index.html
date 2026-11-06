@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block conteudo %}
+<h1>Sudoku</h1>
+
+{% if venceu %}
+    <p class="mensagem">Parabéns! Você completou o Sudoku!</p>
+{% elif mensagem %}
+    <p class="mensagem">{{ mensagem }}</p>
+{% elif selecionada is none %}
+    <p class="mensagem">Clique em uma casa vazia</p>
+{% else %}
+    <p class="mensagem">Agora escolha um número</p>
+{% endif %}
+
+<div class="tabuleiro">
+    {% for valor in tabuleiro %}
+        {% set pos = loop.index0 %}
+        {% set borda = ("borda-direita " if pos % 9 in (2, 5) else "") ~ ("borda-baixo" if pos // 9 in (2, 5) else "") %}
+        {% if fixas[pos] %}
+            <span class="celula fixa {{ borda }}">{{ valor }}</span>
+        {% else %}
+            <a class="celula jogador {{ borda }} {% if pos == selecionada %}selecionada{% endif %}" href="{{ url_for('selecionar', posicao=pos) }}">
+                {% if valor != 0 %}{{ valor }}{% endif %}
+            </a>
+        {% endif %}
+    {% endfor %}
+</div>
+
+{% if not venceu %}
+<div class="numeros">
+    {% for n in range(1, 10) %}
+        <a class="numero" href="{{ url_for('colocar', numero=n) }}">{{ n }}</a>
+    {% endfor %}
+    <a class="numero" href="{{ url_for('colocar', numero=0) }}">Apagar</a>
+</div>
+
+<a class="botao" href="{{ url_for('verificar') }}">Verificar</a>
+{% endif %}
+<a class="botao" href="{{ url_for('reiniciar') }}">Novo jogo</a>
+
+<h2>Placar</h2>
+<div class="placar">
+    <span>Sudokus resolvidos: {{ placar["Resolvidos"] }}</span>
+</div>
+
+{% endblock %}
